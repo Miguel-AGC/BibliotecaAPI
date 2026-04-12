@@ -76,7 +76,7 @@ El objetivo principal es practicar operaciones CRUD (Create, Read, Update, Delet
 
 ---
 
-## 📡 Endpoints principales
+##  Endpoints principales
 
 ###  Libros
 - `GET /api/libros`
