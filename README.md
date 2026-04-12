@@ -20,7 +20,6 @@ El objetivo principal es practicar operaciones CRUD (Create, Read, Update, Delet
 -  Entity Framework Core
 -  MySQL
 -  Pomelo.EntityFrameworkCore.MySql
--  Arquitectura en capas (Domain, Application, Infrastructure)
 -  Swagger (documentación de endpoints)
 
 ---
@@ -35,13 +34,20 @@ El objetivo principal es practicar operaciones CRUD (Create, Read, Update, Delet
 
 - **Libro**
   - Id
+  - ISBN
   - Título
   - FechaPublicación
   - AutorId
+  - Ejemplares
+  - Disponibles
 
 - **Usuario**
   - Id
   - Nombre
+  - Usuario
+  - Password
+  - Rol
+  - FechaRegistro
 
 - **Prestamo**
   - Id
@@ -49,6 +55,7 @@ El objetivo principal es practicar operaciones CRUD (Create, Read, Update, Delet
   - FechaDevolucion
   - UsuarioId
   - LibroId
+  - Devuelto
 
 ---
 
