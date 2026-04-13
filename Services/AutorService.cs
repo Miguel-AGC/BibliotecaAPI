@@ -1,5 +1,7 @@
 ﻿using BibliotecaAPI.Data;
 using BibliotecaAPI.DTOs;
+using BibliotecaAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BibliotecaAPI.Services
 {
@@ -19,7 +21,9 @@ namespace BibliotecaAPI.Services
                 .Select(a => new AutorDto
                 {
                     Id = a.Id,
-                    Nombre = a.Nombre
+                    Nombre = a.Nombre,
+                    FechaNacimiento = a.FechaNacimiento,
+                    Nacionalidad = a.Nacionalidad
                 })
                 .ToListAsync();
         }
@@ -41,9 +45,17 @@ namespace BibliotecaAPI.Services
         // Crear
         public async Task<AutorDto> Create(CrearAutorDto dto)
         {
+            var nombre = dto.Nombre.Trim().ToUpper();
+            var nacionalidad = dto.Nacionalidad.Trim().ToUpper();
+
+            if (dto.FechaNacimiento > DateTime.Now)
+                throw new Exception("La fecha de nacimiento no puede ser futura");
+
             var autor = new Autor
             {
-                Nombre = dto.Nombre
+                Nombre = nombre,
+                FechaNacimiento = dto.FechaNacimiento,
+                Nacionalidad = nacionalidad
             };
 
             _context.Autores.Add(autor);
@@ -52,7 +64,9 @@ namespace BibliotecaAPI.Services
             return new AutorDto
             {
                 Id = autor.Id,
-                Nombre = autor.Nombre
+                Nombre = autor.Nombre,
+                FechaNacimiento = autor.FechaNacimiento,
+                Nacionalidad = autor.Nacionalidad
             };
         }
 
@@ -63,9 +77,15 @@ namespace BibliotecaAPI.Services
 
             if (autor == null) return false;
 
-            autor.Nombre = dto.Nombre;
+            if (dto.FechaNacimiento > DateTime.Now)
+                throw new Exception("La fecha de nacimiento no puede ser futura");
+
+            autor.Nombre = dto.Nombre.Trim().ToUpper();
+            autor.Nacionalidad = dto.Nacionalidad.Trim().ToUpper();
+            autor.FechaNacimiento = dto.FechaNacimiento;
 
             await _context.SaveChangesAsync();
+
             return true;
         }
 

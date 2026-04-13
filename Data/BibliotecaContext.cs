@@ -10,5 +10,6 @@ namespace BibliotecaAPI.Data
         }
 
         public DbSet<Autor> Autores { get; set; }
+
     }
 }
