@@ -1,5 +1,6 @@
 ﻿using BibliotecaAPI.Data;
 using BibliotecaAPI.DTOs;
+using BibliotecaAPI.Exceptions;
 using BibliotecaAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,22 +20,22 @@ namespace BibliotecaAPI.Services
         {
             // Validaciones
             if (string.IsNullOrWhiteSpace(dto.Titulo))
-                throw new Exception("El título es requerido");
+                throw new ApiException("El título es requerido", 400);
 
             if (dto.Ejemplares < 0)
-                throw new Exception("Ejemplares no puede ser negativo");
+                throw new ApiException("Ejemplares no puede ser negativo", 400);
 
             var autorExiste = await _context.Autores
                 .AnyAsync(a => a.Id == dto.AutorId);
 
             if (!autorExiste)
-                throw new Exception("El autor no existe");
+                throw new ApiException("El autor no existe", 404);
 
             var isbnExiste = await _context.Libros
                 .AnyAsync(l => l.ISBN == dto.ISBN);
 
             if (isbnExiste)
-                throw new Exception("El ISBN ya existe");
+                throw new ApiException("El ISBN ya existe", 400);
 
             var libro = new Libro
             {
@@ -102,7 +103,7 @@ namespace BibliotecaAPI.Services
                 .FirstOrDefaultAsync(l => l.Id == id);
 
             if (libro == null)
-                throw new Exception("Libro no encontrado");
+                throw new ApiException("Libro no encontrado", 404);
 
             return new LibroDTO
             {
@@ -122,22 +123,22 @@ namespace BibliotecaAPI.Services
             var libro = await _context.Libros.FindAsync(id);
 
             if (libro == null)
-                throw new Exception("Libro no encontrado");
+                throw new ApiException("Libro no encontrado", 404);
 
             if (dto.Ejemplares < 0)
-                throw new Exception("Ejemplares no puede ser negativo");
+                throw new ApiException("Ejemplares no puede ser negativo", 400);
 
             var autorExiste = await _context.Autores
                 .AnyAsync(a => a.Id == dto.AutorId);
 
             if (!autorExiste)
-                throw new Exception("El autor no existe");
+                throw new ApiException("El autor no existe", 404);
 
             var isbnDuplicado = await _context.Libros
                 .AnyAsync(l => l.ISBN == dto.ISBN && l.Id != id);
 
             if (isbnDuplicado)
-                throw new Exception("El ISBN ya está en uso");
+                throw new ApiException("El ISBN ya está en uso", 400);
 
             libro.Titulo = dto.Titulo.Trim().ToUpper();
             libro.ISBN = dto.ISBN.Trim();

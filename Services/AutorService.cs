@@ -1,5 +1,6 @@
 ﻿using BibliotecaAPI.Data;
 using BibliotecaAPI.DTOs;
+using BibliotecaAPI.Exceptions;
 using BibliotecaAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -49,7 +50,7 @@ namespace BibliotecaAPI.Services
             var nacionalidad = dto.Nacionalidad.Trim().ToUpper();
 
             if (dto.FechaNacimiento > DateTime.Now)
-                throw new Exception("La fecha de nacimiento no puede ser futura");
+                throw new ApiException("La fecha de nacimiento no puede ser futura", 400);
 
             var autor = new Autor
             {
@@ -78,7 +79,7 @@ namespace BibliotecaAPI.Services
             if (autor == null) return false;
 
             if (dto.FechaNacimiento > DateTime.Now)
-                throw new Exception("La fecha de nacimiento no puede ser futura");
+                throw new ApiException("La fecha de nacimiento no puede ser futura", 400);
 
             autor.Nombre = dto.Nombre.Trim().ToUpper();
             autor.Nacionalidad = dto.Nacionalidad.Trim().ToUpper();
