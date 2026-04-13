@@ -21,6 +21,7 @@ builder.Services.AddMvc(option => option.EnableEndpointRouting = false)
     .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
 builder.Services.AddScoped<AutorService>();
+builder.Services.AddScoped<LibroService>();
 
 var app = builder.Build();
 
