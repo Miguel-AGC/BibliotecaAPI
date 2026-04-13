@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BibliotecaAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BibliotecaAPI.Data
 {
@@ -7,5 +8,8 @@ namespace BibliotecaAPI.Data
         public BibliotecaContext(DbContextOptions<BibliotecaContext> options) : base(options)
         {
         }
+
+        public DbSet<Autor> Autores { get; set; }
+
     }
 }

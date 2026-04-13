@@ -1,4 +1,5 @@
 using BibliotecaAPI.Data;
+using BibliotecaAPI.Services;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
@@ -18,6 +19,8 @@ builder.Services.AddDbContext<BibliotecaContext>(options =>
 
 builder.Services.AddMvc(option => option.EnableEndpointRouting = false)
     .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+
+builder.Services.AddScoped<AutorService>();
 
 var app = builder.Build();
 
