@@ -11,9 +11,8 @@ namespace BibliotecaAPI.Data
 
         public DbSet<Autor> Autores { get; set; }
         public DbSet<Libro> Libros { get; set; }
-
         public DbSet<Usuarios> Usuarios { get; set; }
-
+        public DbSet<Prestamos> Prestamos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -65,6 +64,20 @@ namespace BibliotecaAPI.Data
 
                 entity.Property(u => u.Telefono)
                     .HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<Prestamos>(entity =>
+            {
+                entity.HasOne(p => p.Usuario)
+                    .WithMany(u => u.Prestamos)
+                    .HasForeignKey(p => p.UsuarioId);
+
+                entity.HasOne(p => p.Libro)
+                    .WithMany()
+                    .HasForeignKey(p => p.LibroId);
+
+                entity.Property(p => p.FechaPrestamo)
+                    .IsRequired();
             });
         }
     }
