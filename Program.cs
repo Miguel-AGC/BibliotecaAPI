@@ -23,6 +23,7 @@ builder.Services.AddMvc(option => option.EnableEndpointRouting = false)
 
 builder.Services.AddScoped<AutorService>();
 builder.Services.AddScoped<LibroService>();
+builder.Services.AddScoped<UsuarioService>();
 
 var app = builder.Build();
 
