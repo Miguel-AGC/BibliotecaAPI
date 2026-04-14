@@ -1,4 +1,5 @@
-﻿using BibliotecaAPI.Exceptions;
+﻿using BibliotecaAPI.DTOs;
+using BibliotecaAPI.Exceptions;
 using System.Net;
 using System.Text.Json;
 
@@ -24,13 +25,11 @@ namespace BibliotecaAPI.Middlewares
                 context.Response.StatusCode = ex.StatusCode;
                 context.Response.ContentType = "application/json";
 
-                var response = new
-                {
-                    message = ex.Message,
-                    status = ex.StatusCode
-                };
+                var response = ApiResponse<string>.Fail(ex.Message);
 
-                await context.Response.WriteAsync(JsonSerializer.Serialize(response));
+                await context.Response.WriteAsync(
+                    JsonSerializer.Serialize(response)
+                );
             }
             catch (Exception)
             {
