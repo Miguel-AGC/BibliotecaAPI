@@ -49,5 +49,13 @@ namespace BibliotecaAPI.Controllers
             await _service.Eliminar(id);
             return Ok(ApiResponse<string>.Ok(null, "Usuario eliminado"));
         }
+
+        [HttpPut("{id}/cambiar-password")]
+        public async Task<IActionResult> CambiarPassword(int id, [FromBody] CambiarPasswordDTO dto)
+        {
+            await _service.CambiarPassword(id, dto);
+
+            return Ok(ApiResponse<string>.Ok(null, "Contraseña actualizada correctamente"));
+        }
     }
 }

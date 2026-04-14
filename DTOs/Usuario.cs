@@ -37,4 +37,10 @@
         public int Page { get; set; } = 1;
         public int PageSize { get; set; } = 10;
     }
+
+    public class CambiarPasswordDTO
+    {
+        public string CurrentPassword { get; set; }
+        public string NewPassword { get; set; }
+    }
 }

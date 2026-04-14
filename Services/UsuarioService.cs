@@ -146,6 +146,38 @@ namespace BibliotecaAPI.Services
             await _context.SaveChangesAsync();
         }
 
+        /**
+         * Cambiar contraseña
+         */
+        public async Task CambiarPassword(int id, CambiarPasswordDTO dto)
+        {
+            var usuario = await _context.Usuarios.FindAsync(id);
+
+            if (usuario == null)
+                throw new ApiException("Usuario no encontrado", 404);
+
+            //  Validar password actual
+            var esValido = BCrypt.Net.BCrypt.Verify(dto.CurrentPassword, usuario.Password);
+
+            if (!esValido)
+                throw new ApiException("La contraseña actual es incorrecta", 400);
+
+            //  Validar nueva contraseña
+            if (string.IsNullOrWhiteSpace(dto.NewPassword) || dto.NewPassword.Length < 6)
+                throw new ApiException("La nueva contraseña debe tener al menos 6 caracteres");
+
+            //  Evitar misma contraseña
+            var mismaPassword = BCrypt.Net.BCrypt.Verify(dto.NewPassword, usuario.Password);
+
+            if (mismaPassword)
+                throw new ApiException("La nueva contraseña no puede ser igual a la anterior");
+
+            //  Hashear nueva contraseña
+            usuario.Password = BCrypt.Net.BCrypt.HashPassword(dto.NewPassword);
+
+            await _context.SaveChangesAsync();
+        }
+
         //  Mapper
         private UsuarioDTO MapToDTO(Usuarios u)
         {
