@@ -8,6 +8,6 @@
         public DateTime FechaNacimiento { get; set; }
         public required string Nacionalidad { get; set; }
 
-        //public ICollection<Libro> Libros { get; set; }
+        public ICollection<Libro> Libros { get; set; }
     }
 }
