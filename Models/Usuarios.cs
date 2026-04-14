@@ -15,6 +15,6 @@
 
         public DateTime FechaRegistro { get; set; } = DateTime.Now;
 
-        //public ICollection<Prestamo> Prestamos { get; set; } = new List<Prestamo>();
+        public ICollection<Prestamos> Prestamos { get; set; } = new List<Prestamos>();
     }
 }
