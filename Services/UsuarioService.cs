@@ -19,6 +19,9 @@ namespace BibliotecaAPI.Services
         // Registrar nuevo usuario
         public async Task<UsuarioDTO> Crear(CrearUsuarioDTO dto)
         {
+            if(string.IsNullOrWhiteSpace(dto.Username))
+                throw new ApiException("El nombre de usuario es requerido");
+
             if (string.IsNullOrWhiteSpace(dto.Nombre))
                 throw new ApiException("El nombre es requerido");
 
