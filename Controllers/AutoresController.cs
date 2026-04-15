@@ -26,9 +26,6 @@ namespace BibliotecaAPI.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var autor = await _service.GetById(id);
-
-            if (autor == null) return NotFound();
-
             return Ok(ApiResponse<AutorDto>.Ok(autor, "Autor obtenido correctamente"));
         }
 
