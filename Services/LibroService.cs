@@ -157,7 +157,7 @@ namespace BibliotecaAPI.Services
             var libro = await _context.Libros.FindAsync(id);
 
             if (libro == null)
-                throw new Exception("Libro no encontrado");
+                throw new ApiException("Libro no encontrado", 404);
 
             _context.Libros.Remove(libro);
             await _context.SaveChangesAsync();
