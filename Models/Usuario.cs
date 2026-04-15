@@ -6,6 +6,7 @@
 
         public string Username { get; set; }
         public string Nombre { get; set; }
+        public string Rol { get; set; } = "Usuario";
 
         public string Email { get; set; }
 
