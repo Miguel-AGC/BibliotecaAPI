@@ -19,7 +19,7 @@ namespace BibliotecaAPI.Controllers
         public async Task<IActionResult> Get()
         {
             var autores = await _service.GetAll();
-            return Ok(autores);
+            return Ok(ApiResponse<object>.Ok(autores, "Autores obtenidos correctamente"));
         }
 
         [HttpGet("{id}")]
@@ -29,14 +29,14 @@ namespace BibliotecaAPI.Controllers
 
             if (autor == null) return NotFound();
 
-            return Ok(autor);
+            return Ok(ApiResponse<AutorDto>.Ok(autor, "Autor obtenido correctamente"));
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(CrearAutorDto dto)
         {
             var autor = await _service.Create(dto);
-            return Ok(autor);
+            return Ok(ApiResponse<AutorDto>.Ok(autor, "Autor creado correctamente"));
         }
 
         [HttpPut("{id}")]
@@ -44,19 +44,14 @@ namespace BibliotecaAPI.Controllers
         {
             var updated = await _service.Update(id, dto);
 
-            if (!updated) return NotFound();
-
-            return NoContent();
+            return Ok(ApiResponse<AutorDto>.Ok(updated, "Autor actualizado correctamente"));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var deleted = await _service.Delete(id);
-
-            if (!deleted) return NotFound();
-
-            return NoContent();
+            return Ok(ApiResponse<string>.Ok(null, "Autor eliminado correctamente"));
         }
     }
 }

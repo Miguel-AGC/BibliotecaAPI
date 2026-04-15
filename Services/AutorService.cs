@@ -34,12 +34,14 @@ namespace BibliotecaAPI.Services
         {
             var autor = await _context.Autores.FindAsync(id);
 
-            if (autor == null) return null;
+            if (autor == null) throw new ApiException("Autor no encontrado", 404);
 
             return new AutorDto
             {
                 Id = autor.Id,
-                Nombre = autor.Nombre
+                Nombre = autor.Nombre,
+                FechaNacimiento = autor.FechaNacimiento,
+                Nacionalidad = autor.Nacionalidad
             };
         }
 
@@ -72,11 +74,11 @@ namespace BibliotecaAPI.Services
         }
 
         // Actualizar
-        public async Task<bool> Update(int id, CrearAutorDto dto)
+        public async Task<AutorDto> Update(int id, CrearAutorDto dto)
         {
             var autor = await _context.Autores.FindAsync(id);
 
-            if (autor == null) return false;
+            if (autor == null) throw new ApiException("Autor no encontrado", 404);
 
             if (dto.FechaNacimiento > DateTime.Now)
                 throw new ApiException("La fecha de nacimiento no puede ser futura", 400);
@@ -87,7 +89,7 @@ namespace BibliotecaAPI.Services
 
             await _context.SaveChangesAsync();
 
-            return true;
+            return await GetById(autor.Id);
         }
 
         // Eliminar
@@ -95,7 +97,7 @@ namespace BibliotecaAPI.Services
         {
             var autor = await _context.Autores.FindAsync(id);
 
-            if (autor == null) return false;
+            if (autor == null) throw new ApiException("Autor no encontrado", 404);
 
             _context.Autores.Remove(autor);
             await _context.SaveChangesAsync();
