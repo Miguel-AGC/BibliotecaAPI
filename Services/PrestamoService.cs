@@ -30,7 +30,7 @@ namespace BibliotecaAPI.Services
                 throw new ApiException("No hay ejemplares disponibles");
 
             //  Crear préstamo
-            var prestamo = new Prestamos
+            var prestamo = new Prestamo
             {
                 UsuarioId = dto.UsuarioId,
                 LibroId = dto.LibroId

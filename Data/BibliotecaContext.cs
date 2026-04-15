@@ -11,8 +11,8 @@ namespace BibliotecaAPI.Data
 
         public DbSet<Autor> Autores { get; set; }
         public DbSet<Libro> Libros { get; set; }
-        public DbSet<Usuarios> Usuarios { get; set; }
-        public DbSet<Prestamos> Prestamos { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Prestamo> Prestamos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -40,7 +40,7 @@ namespace BibliotecaAPI.Data
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
-            modelBuilder.Entity<Usuarios>(entity =>
+            modelBuilder.Entity<Usuario>(entity =>
             {
                 entity.Property(u => u.Username)
                     .IsRequired() 
@@ -66,7 +66,7 @@ namespace BibliotecaAPI.Data
                     .HasMaxLength(20);
             });
 
-            modelBuilder.Entity<Prestamos>(entity =>
+            modelBuilder.Entity<Prestamo>(entity =>
             {
                 entity.HasOne(p => p.Usuario)
                     .WithMany(u => u.Prestamos)

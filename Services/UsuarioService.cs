@@ -41,7 +41,7 @@ namespace BibliotecaAPI.Services
 
             var passwordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password);
 
-            var usuario = new Usuarios
+            var usuario = new Usuario
             {
                 Username = dto.Username.Trim(),
                 Nombre = dto.Nombre.Trim().ToUpper(),
@@ -179,7 +179,7 @@ namespace BibliotecaAPI.Services
         }
 
         //  Mapper
-        private UsuarioDTO MapToDTO(Usuarios u)
+        private UsuarioDTO MapToDTO(Usuario u)
         {
             return new UsuarioDTO
             {

@@ -1,6 +1,6 @@
 ﻿namespace BibliotecaAPI.Models
 {
-    public class Usuarios
+    public class Usuario
     {
         public int Id { get; set; }
 
@@ -15,6 +15,6 @@
 
         public DateTime FechaRegistro { get; set; } = DateTime.Now;
 
-        public ICollection<Prestamos> Prestamos { get; set; } = new List<Prestamos>();
+        public ICollection<Prestamo> Prestamos { get; set; } = new List<Prestamo>();
     }
 }
